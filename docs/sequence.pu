@@ -1,0 +1,36 @@
+@startuml
+autonumber
+
+actor       User
+participant Frontend
+participant MetaMask
+participant WorldIDServer
+participant Backend
+participant Polygon
+
+User ->> Frontend: Tap Wallet Connect
+Frontend -> MetaMask: Connect Request
+MetaMask --> Frontend: Connect Confirmation
+User ->> Frontend: Allow
+Frontend -> MetaMask: Allow and Account Request
+MetaMask --> Frontend: Account
+
+User ->> Frontend: Tap Create SBT from WorldID
+Frontend -> WorldIDServer: Auth Request
+WorldIDServer --> Frontend: Auth Confirmation
+User ->> Frontend: Tap Confirm
+Frontend -> WorldIDServer: Allow
+WorldIDServer --> Frontend: Allowed? - WalletID?
+
+Frontend -> Backend: Create SBT - WalletID?
+Backend -> Backend: Create Mint SBT Tx
+Backend -> Polygon: Mint SBT
+Polygon -> Polygon: Mint SBT
+Polygon --> Backend: Receipt
+Backend -> Backend: Create Update WorldId Tx
+Backend -> Polygon: Update WorldId
+Polygon -> Polygon: Update WorldId
+Polygon --> Backend: Receipt
+Backend --> Frontend: Result
+
+@enduml
