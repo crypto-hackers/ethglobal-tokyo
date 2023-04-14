@@ -1,3 +1,5 @@
+//npx solcjs contracts/sbt.sol --abi --include-path ../node_modules/ --base-path ../node_modules/
+
 const hre = require("hardhat");
 
 async function main() {
