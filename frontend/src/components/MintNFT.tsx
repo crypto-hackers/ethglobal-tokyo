@@ -31,18 +31,14 @@ const MintNFT: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      <div className="w-full max-w-md p-8 space-y-4 bg-white rounded shadow">
-        <h1 className="text-2xl font-semibold">Mint NFT</h1>
-        <p>Recipient Address: {web3Store.accounts[0]}</p>
-        <button
-          onClick={handleMint}
-          className="w-full p-2 font-semibold text-white bg-indigo-600 rounded hover:bg-indigo-500"
-        >
-          Mint NFT
-        </button>
-        {message && <p className="mt-4 text-center">{message}</p>}
-      </div>
+    <div className="flex flex-col items-center">
+      <button
+        onClick={handleMint}
+        className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mb-4 lg:mb-0"
+      >
+        Mint NFT
+      </button>
+      {message && <p className="mt-4 text-center">{message}</p>}
     </div>
   );
 };
