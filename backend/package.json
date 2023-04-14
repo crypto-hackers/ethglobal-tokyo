@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q -r dotenv/config dist/bin/www.js dotenv_config_path=.env\"",
     "build": "npx tsc",
-    "start": "node dist/bin/www.js"
+    "start": "node -r dotenv/config dist/bin/www.js dotenv_config_path=.env"
   },
   "keywords": [],
   "author": "",
