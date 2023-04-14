@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { web3Store } from "@/stores/web3Store";
-import { ExternallyOwnedAccounts } from "@/shared/types";
 
 const MintNFT: React.FC = () => {
   const [message, setMessage] = useState("");
@@ -13,7 +12,7 @@ const MintNFT: React.FC = () => {
       return;
     }
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/mint`, {
+    const response = await fetch("/api/mintNFT", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ to: web3Store.accounts[0] }),
