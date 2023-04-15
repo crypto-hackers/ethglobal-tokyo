@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { web3Store } from "@/stores/web3Store";
 import { observer } from "mobx-react-lite";
+import { verificationDataStore } from "@/stores/verificationDataStore";
 
-const ClaimFT: React.FC = () => {
+const VerifyKYC: React.FC = () => {
   const [message, setMessage] = useState("");
 
-  const handleMint = async () => {
+  const handleVerify = async () => {
     setMessage("");
 
     if (web3Store.accounts.length === 0) {
@@ -13,7 +14,7 @@ const ClaimFT: React.FC = () => {
       return;
     }
 
-    const response = await fetch("/api/claimFT", {
+    const response = await fetch("/api/verifyKYC", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ to: web3Store.accounts[0] }),
@@ -22,10 +23,10 @@ const ClaimFT: React.FC = () => {
     const data = await response.json();
     console.log(data);
 
-    if (response.status === 201) {
-      setMessage(`You got Airdrop!`);
+    if (response.status === 200) {
+      verificationDataStore.fetchData(web3Store.accounts[0]).then();
     } else {
-      setMessage(`Error claiming FT: ${data.data.error}`);
+      setMessage(`Error verifying KYC: ${data.data.error}`);
     }
   };
 
@@ -33,14 +34,14 @@ const ClaimFT: React.FC = () => {
   return (
     <div className="flex flex-col items-center">
       <button
-        onClick={handleMint}
-        className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mb-4 lg:mb-0"
+        onClick={handleVerify}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
       >
-        Claim WorldToken Airdrop
+        Verify
       </button>
       {message && <p className="mt-4 text-center">{message}</p>}
     </div>
   );
 };
 
-export default observer(ClaimFT);
+export default observer(VerifyKYC);

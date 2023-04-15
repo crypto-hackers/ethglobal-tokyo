@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { SignInWithWorldID } from "@worldcoin/idkit";
 import { verificationDataStore } from "@/stores/verificationDataStore";
 import { web3Store } from "@/stores/web3Store";
+import VerifyKYC from "@/components/VerifyKYC";
 
 const VerificationData: React.FC = () => {
   useEffect(() => {
@@ -39,8 +40,8 @@ const VerificationData: React.FC = () => {
     },
   ];
 
-  const handleClick = () => {
-    console.log();
+  const handleClick = (label: string) => {
+    console.log(label);
   };
 
   if (web3Store.accounts.length === 0) return null;
@@ -93,10 +94,11 @@ const VerificationData: React.FC = () => {
                     )}
                   </SignInWithWorldID>
                 )}
-                {!data.isVerified && label !== "WorldID" && (
+                {!data.isVerified && label === "KYC" && <VerifyKYC />}
+                {!data.isVerified && label !== "WorldID" && label !== "KYC" && (
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                    onClick={handleClick}
+                    onClick={() => handleClick(label)}
                   >
                     Verify
                   </button>
