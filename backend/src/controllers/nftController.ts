@@ -3,11 +3,11 @@ import Web3 from "web3";
 import web3 from "../config/web3Provider";
 import ERC721ABI from "../abi/ERC721.json";
 
-const contractAddress = process.env.CONTRACT_ADDRESS;
+const NftContractAddress = process.env.NFT_CONTRACT_ADDRESS;
 const privateKey = process.env.PRIVATE_KEY;
-if (!contractAddress || !privateKey) throw new Error("Missing env variables");
-console.log("Contract address:", contractAddress);
-console.log("Private key:", privateKey);
+if (!NftContractAddress || !privateKey)
+  throw new Error("Missing env variables");
+console.log("Contract address:", NftContractAddress);
 
 const mintNFT = async (req: Request, res: Response) => {
   try {
@@ -17,7 +17,10 @@ const mintNFT = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Invalid recipient address" });
     }
 
-    const contract = new web3.eth.Contract(ERC721ABI as any, contractAddress);
+    const contract = new web3.eth.Contract(
+      ERC721ABI as any,
+      NftContractAddress
+    );
 
     const account = web3.eth.accounts.privateKeyToAccount(privateKey);
     web3.eth.accounts.wallet.add(account);
@@ -31,7 +34,7 @@ const mintNFT = async (req: Request, res: Response) => {
 
     const signedTx = await web3.eth.accounts.signTransaction(
       {
-        to: contractAddress,
+        to: NftContractAddress,
         data: mintTx.encodeABI(),
         gas: gasEstimate,
       },
@@ -67,7 +70,10 @@ const getBatchVerificationData = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Invalid recipient address" });
     }
 
-    const contract = new web3.eth.Contract(ERC721ABI as any, contractAddress);
+    const contract = new web3.eth.Contract(
+      ERC721ABI as any,
+      NftContractAddress
+    );
 
     const data = await contract.methods
       .getBatchVerificationData(address)
