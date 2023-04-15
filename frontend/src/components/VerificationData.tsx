@@ -4,6 +4,8 @@ import React, { useEffect } from "react";
 import { SignInWithWorldID } from "@worldcoin/idkit";
 import { verificationDataStore } from "@/stores/verificationDataStore";
 import { web3Store } from "@/stores/web3Store";
+import VerifyKYC from "@/components/VerifyKYC";
+import VerifyWorldId from "@/components/VerifyWorldId";
 
 const VerificationData: React.FC = () => {
   useEffect(() => {
@@ -39,8 +41,8 @@ const VerificationData: React.FC = () => {
     },
   ];
 
-  const handleClick = () => {
-    console.log();
+  const handleClick = (label: string) => {
+    console.log(label);
   };
 
   if (web3Store.accounts.length === 0) return null;
@@ -77,26 +79,12 @@ const VerificationData: React.FC = () => {
                   "-"}
               </td>
               <td className="border border-green-600 px-4 py-2">
-                {!data.isVerified && label === "WorldID" && (
-                  <SignInWithWorldID
-                    nonce="z-dkEmoy_ujfk7B8uTiQpp"
-                    onSuccess={(result) => console.log(result)}
-                    app_id="app_staging_bdde51f6c88010a57aec659b733f18b4"
-                  >
-                    {({ open }) => (
-                      <button
-                        onClick={open}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                      >
-                        Verify
-                      </button>
-                    )}
-                  </SignInWithWorldID>
-                )}
-                {!data.isVerified && label !== "WorldID" && (
+                {!data.isVerified && label === "WorldID" && <VerifyWorldId />}
+                {!data.isVerified && label === "KYC" && <VerifyKYC />}
+                {!data.isVerified && label !== "WorldID" && label !== "KYC" && (
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                    onClick={handleClick}
+                    onClick={() => handleClick(label)}
                   >
                     Verify
                   </button>
