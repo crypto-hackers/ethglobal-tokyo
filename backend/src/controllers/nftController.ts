@@ -59,4 +59,27 @@ const mintNFT = async (req: Request, res: Response) => {
   }
 };
 
-export { mintNFT };
+const getBatchVerificationData = async (req: Request, res: Response) => {
+  try {
+    const address = req.params.address;
+
+    if (!Web3.utils.isAddress(address)) {
+      return res.status(400).json({ message: "Invalid recipient address" });
+    }
+
+    const contract = new web3.eth.Contract(ERC721ABI as any, contractAddress);
+
+    const data = await contract.methods
+      .getBatchVerificationData(address)
+      .call();
+
+    return res.status(200).json({ data });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ error: "An error occurred while fetching the ERC721 balance" });
+  }
+};
+
+export { mintNFT, getBatchVerificationData };

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import MetaMaskButton from "@/components/MetaMaskButton";
 import MintNFT from "@/components/MintNFT";
+import VerificationData from "@/components/VerificationData";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,6 +14,7 @@ export default function Home() {
           WorldID Connect
         </button>
         <MetaMaskButton />
+        <VerificationData />
         <MintNFT />
       </div>
     </main>
