@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { web3Store } from "@/stores/web3Store";
 import { observer } from "mobx-react-lite";
+import { verificationDataStore } from "@/stores/verificationDataStore";
 
 const ClaimFT: React.FC = () => {
   const [message, setMessage] = useState("");
@@ -30,6 +31,7 @@ const ClaimFT: React.FC = () => {
   };
 
   if (web3Store.accounts.length === 0) return null;
+  if (!verificationDataStore.worldId.isVerified) return null;
   return (
     <div className="flex flex-col items-center">
       <button
