@@ -6,6 +6,9 @@ import { verificationDataStore } from "@/stores/verificationDataStore";
 const UpdateChatGroup: React.FC = () => {
   const [message, setMessage] = useState("");
 
+  if (web3Store.accounts.length === 0) return null;
+  if (!verificationDataStore.worldId.isVerified) return null;
+
   const update = async () => {
     setMessage("");
 

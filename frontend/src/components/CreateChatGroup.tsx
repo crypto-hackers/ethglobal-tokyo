@@ -6,7 +6,11 @@ import { verificationDataStore } from "@/stores/verificationDataStore";
 const CreateChatGroup: React.FC = () => {
   const [message, setMessage] = useState("");
 
+  if (web3Store.accounts.length === 0) return null;
+  if (!verificationDataStore.worldId.isVerified) return null;
+
   const create = async () => {
+
     setMessage("");
 
     const response = await fetch("/api/createChatGroup", {
