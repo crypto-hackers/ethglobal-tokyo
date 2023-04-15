@@ -20,7 +20,7 @@ nohup npx yarn start &
 ```
 ### stop
 ```
-ps aux | grep next
+ps aux | grep node
 kill
 ```
 
