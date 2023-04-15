@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { web3Store } from "@/stores/web3Store";
 import { observer } from "mobx-react-lite";
 import { verificationDataStore } from "@/stores/verificationDataStore";
-import { SignInWithWorldID } from "@worldcoin/idkit";
+import { IDKitWidget } from "@worldcoin/idkit";
 
 const VerifyWorldId: React.FC = () => {
   const [message, setMessage] = useState("");
@@ -33,14 +33,16 @@ const VerifyWorldId: React.FC = () => {
 
   return (
     <>
-      <SignInWithWorldID
-        nonce="z-dkEmoy_ujfk7B8uTiQpp"
-        onSuccess={(result) => {
-          console.log(result);
-          handleVerify();
-        }}
-        app_id="app_staging_bdde51f6c88010a57aec659b733f18b4"
-      >
+      <IDKitWidget
+        action="uniq"
+        onSuccess={
+          (result) => {
+            console.log(result);
+            handleVerify();
+          }
+        }
+        app_id="app_staging_5413ea86b55f65d9f4c83c55c839afee"
+      >    
         {({ open }) => (
           <button
             onClick={open}
@@ -49,7 +51,7 @@ const VerifyWorldId: React.FC = () => {
             Verify
           </button>
         )}
-      </SignInWithWorldID>
+      </IDKitWidget>
       {message && <p className="mt-4 text-center">{message}</p>}
     </>
   );

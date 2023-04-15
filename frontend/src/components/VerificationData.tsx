@@ -1,7 +1,6 @@
 // components/VerificationData.tsx
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
-import { SignInWithWorldID } from "@worldcoin/idkit";
 import { verificationDataStore } from "@/stores/verificationDataStore";
 import { web3Store } from "@/stores/web3Store";
 import VerifyKYC from "@/components/VerifyKYC";
