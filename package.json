@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@pushprotocol/restapi": "^1.2.2",
+    "@web3-react/core": "^6.1.9",
+    "dotenv": "^16.0.3",
+    "ethers": "^5.7.2"
+  }
+}
