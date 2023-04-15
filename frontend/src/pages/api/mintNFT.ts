@@ -5,7 +5,7 @@ const mintNFT = async (req: NextApiRequest, res: NextApiResponse) => {
   const { to } = req.body;
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/mint`, {
+    const response = await fetch(`${process.env.API_BASE_URL}/mint`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ to }),
