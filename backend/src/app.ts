@@ -4,6 +4,7 @@ import cors from "cors";
 import indexRouter from "./routes/index";
 import nftRoutes from "./routes/nftRoutes";
 import ftRoutes from "./routes/ftRoutes";
+import chatGroupRoutes from "./routes/chatGroupRoutes";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, "../public")));
 app.use("/", indexRouter);
 app.use("/api/nft", nftRoutes);
 app.use("/api/ft", ftRoutes);
+app.use("/api/chatgroup", chatGroupRoutes);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const err: any = new Error("Not Found");
