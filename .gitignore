@@ -267,5 +267,18 @@ benchmarks/graphs
 ## https://git-scm.com/docs/gitignore
 
 
+# shun
+node_modules
+.env
+coverage
+coverage.json
+typechain
+typechain-types
+
+## Hardhat files
+cache
+artifacts
+
+
 # Local Netlify folder
 .netlify
