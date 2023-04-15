@@ -8,15 +8,12 @@ export default async function handler(
   const { address } = req.query;
 
   try {
-    const response = await axios.get(
+    const response = await fetch(
       `${process.env.API_BASE_URL}/api/nft/address/${address}`
     );
 
-    if (response.status === 200) {
-      res.status(200).json(response.data);
-    } else {
-      res.status(response.status).json(response.data);
-    }
+    const data = await response.json();
+    res.status(response.status).json(data);
   } catch (error) {
     res
       .status(500)
