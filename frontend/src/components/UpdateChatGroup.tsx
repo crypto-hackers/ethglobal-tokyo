@@ -34,9 +34,9 @@ const UpdateChatGroup: React.FC = () => {
         onClick={update}
         className="bg-yellow-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mb-4 lg:mb-0"
       >
-        Update Chat Group
+        Join World ID Chat Group
       </button>
-      {message && <p className="mt-4 text-center">{message}</p>}
+      {/* {message && <p className="mt-4 text-center">{message}</p>} */}
     </div>
   );
 };
