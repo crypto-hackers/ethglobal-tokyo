@@ -26,7 +26,7 @@ const MintNFT: React.FC = () => {
     if (response.status === 201) {
       verificationDataStore.fetchData(web3Store.accounts[0]).then();
     } else {
-      setMessage(`Error minting NFT: ${data.error}`);
+      setMessage(`Error minting NFT: ${data.data.error}`);
     }
   };
 
