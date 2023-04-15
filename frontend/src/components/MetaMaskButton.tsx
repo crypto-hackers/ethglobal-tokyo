@@ -58,17 +58,26 @@ const MetaMaskButton: React.FC = () => {
     }
   };
 
-  if (web3Store.accounts.length > 0) return null;
-  return (
-    <div className="flex flex-col items-center">
-      <button
-        onClick={handleConnect}
-        className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded mb-4 lg:mb-0"
-      >
-        Connect to MetaMask
-      </button>
-    </div>
-  );
+  if (web3Store.accounts.length > 0) {
+    return (
+      <div className="flex flex-col items-center">
+        <p className="text-white font-bold py-2 px-4 rounded mb-4 lg:mb-0">
+          {web3Store.accounts[0]}
+        </p>
+      </div>
+    );
+  } else {
+    return (
+      <div className="flex flex-col items-center">
+        <button
+          onClick={handleConnect}
+          className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded mb-4 lg:mb-0"
+        >
+          Connect to MetaMask
+        </button>
+      </div>
+    );
+  }
 };
 
 interface ConnectInfo {

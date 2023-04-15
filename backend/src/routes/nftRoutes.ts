@@ -1,8 +1,12 @@
 import { Router } from "express";
-import { mintNFT } from "../controllers/nftController";
+import {
+  getBatchVerificationData,
+  mintNFT,
+} from "../controllers/nftController";
 
 const router = Router();
 
 router.post("/mint", mintNFT);
+router.get("/address/:address", getBatchVerificationData);
 
 export default router;

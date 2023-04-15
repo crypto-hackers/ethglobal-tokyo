@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { web3Store } from "@/stores/web3Store";
+import { observer } from "mobx-react-lite";
+import { verificationDataStore } from "@/stores/verificationDataStore";
 
 const MintNFT: React.FC = () => {
   const [message, setMessage] = useState("");
@@ -19,27 +21,28 @@ const MintNFT: React.FC = () => {
     });
 
     const data = await response.json();
+    console.log(data);
 
-    if (response.status === 200) {
-      setMessage(
-        `NFT minted successfully. Transaction hash: ${data.transactionHash}`
-      );
+    if (response.status === 201) {
+      verificationDataStore.fetchData(web3Store.accounts[0]).then();
     } else {
-      setMessage(`Error minting NFT: ${data.message}`);
+      setMessage(`Error minting NFT: ${data.error}`);
     }
   };
 
+  if (web3Store.accounts.length === 0) return null;
+  if (verificationDataStore.dataFetchStatus !== "error") return null;
   return (
     <div className="flex flex-col items-center">
       <button
         onClick={handleMint}
         className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mb-4 lg:mb-0"
       >
-        Mint NFT
+        Mint SBT
       </button>
       {message && <p className="mt-4 text-center">{message}</p>}
     </div>
   );
 };
 
-export default MintNFT;
+export default observer(MintNFT);
