@@ -1,6 +1,7 @@
 // components/VerificationData.tsx
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
+import { SignInWithWorldID } from "@worldcoin/idkit";
 import { verificationDataStore } from "@/stores/verificationDataStore";
 import { web3Store } from "@/stores/web3Store";
 
@@ -38,6 +39,10 @@ const VerificationData: React.FC = () => {
     },
   ];
 
+  const handleClick = () => {
+    console.log();
+  };
+
   if (web3Store.accounts.length === 0) return null;
   if (verificationDataStore.dataFetchStatus !== "done") return null;
   return (
@@ -72,8 +77,27 @@ const VerificationData: React.FC = () => {
                   "-"}
               </td>
               <td className="border border-green-600 px-4 py-2">
-                {!data.isVerified && (
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+                {!data.isVerified && label === "WorldID" && (
+                  <SignInWithWorldID
+                    nonce="z-dkEmoy_ujfk7B8uTiQpp"
+                    onSuccess={(result) => console.log(result)}
+                    app_id="app_staging_bdde51f6c88010a57aec659b733f18b4"
+                  >
+                    {({ open }) => (
+                      <button
+                        onClick={open}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                      >
+                        Verify
+                      </button>
+                    )}
+                  </SignInWithWorldID>
+                )}
+                {!data.isVerified && label !== "WorldID" && (
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                    onClick={handleClick}
+                  >
                     Verify
                   </button>
                 )}
