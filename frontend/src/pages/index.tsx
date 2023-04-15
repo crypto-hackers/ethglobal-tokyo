@@ -4,6 +4,7 @@ import MetaMaskButton from "@/components/MetaMaskButton";
 import MintNFT from "@/components/MintNFT";
 import VerificationData from "@/components/VerificationData";
 import { SignInWithWorldID } from "@worldcoin/idkit";
+import ClaimFT from "@/components/ClaimFT";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function Home() {
             </button>
           }
         </SignInWithWorldID>
+        <ClaimFT />
       </div>
     </main>
   );
