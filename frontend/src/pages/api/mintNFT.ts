@@ -12,12 +12,7 @@ const mintNFT = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     const data = await response.json();
-
-    if (response.status === 201) {
-      res.status(201).json(data);
-    } else {
-      res.status(response.status).json({ data });
-    }
+    res.status(response.status).json({ data });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
