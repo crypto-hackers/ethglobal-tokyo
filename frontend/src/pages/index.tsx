@@ -4,6 +4,8 @@ import MetaMaskButton from "@/components/MetaMaskButton";
 import MintNFT from "@/components/MintNFT";
 import VerificationData from "@/components/VerificationData";
 import ClaimFT from "@/components/ClaimFT";
+import CreateChatGroup from "@/components/CreateChatGroup";
+import UpdateChatGroup from "@/components/UpdateChatGroup";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,6 +17,7 @@ export default function Home() {
         <MintNFT />
         <VerificationData />
         <ClaimFT />
+        <UpdateChatGroup/>
       </div>
     </main>
   );
