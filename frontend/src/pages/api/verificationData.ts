@@ -12,7 +12,11 @@ export default async function handler(
       `${process.env.API_BASE_URL}/api/nft/address/${address}`
     );
 
-    res.status(200).json(response.data);
+    if (response.status === 200) {
+      res.status(200).json(response.data);
+    } else {
+      res.status(response.status).json(response.data);
+    }
   } catch (error) {
     res
       .status(500)

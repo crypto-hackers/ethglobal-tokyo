@@ -1,61 +1,85 @@
-import { observer } from "mobx-react";
-import { useEffect } from "react";
-import { web3Store } from "@/stores/web3Store";
+// components/VerificationData.tsx
+import { observer } from "mobx-react-lite";
+import React, { useEffect } from "react";
 import { verificationDataStore } from "@/stores/verificationDataStore";
+import { web3Store } from "@/stores/web3Store";
 
 const VerificationData: React.FC = () => {
-  const { data } = verificationDataStore;
-  const keys = [
-    "isTwitterVerified",
-    "isDiscordVerified",
-    "isEmailVerified",
-    "isKYCVerified",
-    "isWorldIdVerified",
-    "isPolygonIdVerified",
-    "twitterID",
-    "discordID",
-    "emailAddress",
-    "worldId",
-    "polygonId",
-  ];
-
   useEffect(() => {
-    const fetchVerificationData = async () => {
-      if (web3Store.accounts.length === 0) return;
-
-      try {
-        const response = await fetch(
-          `/api/verificationData?address=${web3Store.accounts[0]}`
-        );
-        const fetchedData = await response.json();
-
-        if (response.status === 200) {
-          verificationDataStore.setData(fetchedData.data);
-        } else {
-          verificationDataStore.setData([]);
-          alert(`Error fetching verification data: ${fetchedData.error}`);
-        }
-      } catch (error) {
-        console.error(error);
-        verificationDataStore.setData([]);
-        alert("Error fetching verification data");
-      }
-    };
-
-    fetchVerificationData();
+    if (web3Store.accounts.length > 0) {
+      verificationDataStore.fetchData(web3Store.accounts[0]).then();
+    }
   }, [web3Store.accounts]);
 
+  const dataItems = [
+    {
+      label: "Twitter",
+      data: verificationDataStore.twitter,
+    },
+    {
+      label: "Discord",
+      data: verificationDataStore.discord,
+    },
+    {
+      label: "Email",
+      data: verificationDataStore.email,
+    },
+    {
+      label: "KYC",
+      data: verificationDataStore.kyc,
+    },
+    {
+      label: "WorldID",
+      data: verificationDataStore.worldId,
+    },
+    {
+      label: "PolygonID",
+      data: verificationDataStore.polygonId,
+    },
+  ];
+
+  if (web3Store.accounts.length === 0) return null;
+  if (verificationDataStore.dataFetchStatus !== "done") return null;
   return (
-    <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-8">
-      <h2 className="text-2xl mb-4">Verification Data</h2>
-      <ul className="space-y-2">
-        {data.map((item, index) => (
-          <li key={index}>
-            <strong className="mr-2">{keys[index]}:</strong> {item.toString()}
-          </li>
+    <table className="table-auto border-collapse border border-green-800 mt-10">
+      <thead>
+        <tr>
+          <th className="border border-green-600 px-4 py-2">Item</th>
+          <th className="border border-green-600 px-4 py-2">Verified</th>
+          <th className="border border-green-600 px-4 py-2">Value</th>
+          <th className="border border-green-600 px-4 py-2">Verify</th>
+        </tr>
+      </thead>
+      <tbody>
+        {dataItems.map(({ label, data }) => (
+          <tr key={label}>
+            <td className="border border-green-600 px-4 py-2">{label}</td>
+            <td className="border border-green-600 px-4 py-2">
+              {data.isVerified ? "v" : "-"}
+            </td>
+            <td className="border border-green-600 px-4 py-2">
+              {data[
+                data.hasOwnProperty("emailAddress")
+                  ? "emailAddress"
+                  : "twitterID"
+              ] ||
+                data[
+                  data.hasOwnProperty("discordID") ? "discordID" : "worldId"
+                ] ||
+                data[data.hasOwnProperty("polygonId") ? "polygonId" : "-"] ||
+                "-"}
+            </td>
+            <td className="border border-green-600 px-4 py-2">
+              {!data.isVerified && (
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+                  Verify
+                </button>
+              )}
+            </td>
+          </tr>
         ))}
-      </ul>
-    </div>
+      </tbody>
+    </table>
   );
 };
 
