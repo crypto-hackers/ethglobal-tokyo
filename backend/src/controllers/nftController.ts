@@ -145,6 +145,65 @@ const updateKYCData = async (req: Request, res: Response) => {
   }
 };
 
+const updateWorldIdData = async (req: Request, res: Response) => {
+  try {
+    const to = req.body.to;
+
+    if (!Web3.utils.isAddress(to)) {
+      return res.status(400).json({ message: "Invalid recipient address" });
+    }
+
+    const contract = new web3.eth.Contract(
+      ERC721ABI as any,
+      NftContractAddress
+    );
+
+    const account = web3.eth.accounts.privateKeyToAccount(privateKey);
+    web3.eth.accounts.wallet.add(account);
+    web3.eth.defaultAccount = account.address;
+
+    const tokenId = await tokenOfOwnerByIndex(to);
+
+    const gasEstimate = await contract.methods
+      .updateWorldIdData(tokenId, true, "Verified")
+      .estimateGas({ from: account.address });
+
+    const updateTx = contract.methods.updateWorldIdData(
+      tokenId,
+      true,
+      "Verified"
+    );
+
+    const signedTx = await web3.eth.accounts.signTransaction(
+      {
+        to: NftContractAddress,
+        data: updateTx.encodeABI(),
+        gas: gasEstimate,
+      },
+      privateKey
+    );
+
+    if (!signedTx.rawTransaction) throw new Error("Failed to sign transaction");
+
+    const receipt = await web3.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    );
+
+    res.status(200).json({
+      message: "KYC Data Updated successfully",
+      transactionHash: receipt.transactionHash,
+      blockNumber: receipt.blockNumber,
+      transactionIndex: receipt.transactionIndex,
+    });
+  } catch (error) {
+    console.error("Error minting NFT:", error);
+    res
+      .status(500)
+      // @ts-ignore
+      .json({ message: "Error minting NFT", error: error.message });
+  }
+};
+
 const tokenOfOwnerByIndex = async (address: string) => {
   try {
     if (!Web3.utils.isAddress(address)) throw new Error("Invalid address");
@@ -164,4 +223,4 @@ const tokenOfOwnerByIndex = async (address: string) => {
   }
 };
 
-export { mintNFT, getBatchVerificationData, updateKYCData };
+export { mintNFT, getBatchVerificationData, updateKYCData, updateWorldIdData };

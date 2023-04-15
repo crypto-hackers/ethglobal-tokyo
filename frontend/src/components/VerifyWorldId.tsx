@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { web3Store } from "@/stores/web3Store";
 import { observer } from "mobx-react-lite";
 import { verificationDataStore } from "@/stores/verificationDataStore";
+import { SignInWithWorldID } from "@worldcoin/idkit";
 
-const VerifyKYC: React.FC = () => {
+const VerifyWorldId: React.FC = () => {
   const [message, setMessage] = useState("");
 
   const handleVerify = async () => {
@@ -14,7 +15,7 @@ const VerifyKYC: React.FC = () => {
       return;
     }
 
-    const response = await fetch("/api/verifyKYC", {
+    const response = await fetch("/api/verifyWorldId", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ to: web3Store.accounts[0] }),
@@ -31,16 +32,27 @@ const VerifyKYC: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <button
-        onClick={handleVerify}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+    <>
+      <SignInWithWorldID
+        nonce="z-dkEmoy_ujfk7B8uTiQpp"
+        onSuccess={(result) => {
+          console.log(result);
+          handleVerify();
+        }}
+        app_id="app_staging_bdde51f6c88010a57aec659b733f18b4"
       >
-        Verify
-      </button>
+        {({ open }) => (
+          <button
+            onClick={open}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+          >
+            Verify
+          </button>
+        )}
+      </SignInWithWorldID>
       {message && <p className="mt-4 text-center">{message}</p>}
-    </div>
+    </>
   );
 };
 
-export default observer(VerifyKYC);
+export default observer(VerifyWorldId);

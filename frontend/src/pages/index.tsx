@@ -4,7 +4,6 @@ import MetaMaskButton from "@/components/MetaMaskButton";
 import MintNFT from "@/components/MintNFT";
 import VerificationData from "@/components/VerificationData";
 import ClaimFT from "@/components/ClaimFT";
-import { SignInWithWorldID } from "@worldcoin/idkit";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,17 +15,6 @@ export default function Home() {
         <MintNFT />
         <VerificationData />
         <ClaimFT />
-        <SignInWithWorldID
-            nonce="z-dkEmoy_ujfk7B8uTiQpp"
-            onSuccess={result => console.log(result)}
-            app_id="app_staging_bdde51f6c88010a57aec659b733f18b4"
-          >
-          {({ open }) => 
-            <button  onClick={open} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mb-4 lg:mb-0">
-              WorldID Connect
-            </button>
-          }
-        </SignInWithWorldID>
       </div>
     </main>
   );

@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const verifyKYC = async (req: NextApiRequest, res: NextApiResponse) => {
+const verifyWorldId = async (req: NextApiRequest, res: NextApiResponse) => {
   const { to } = req.body;
 
   try {
     const response = await fetch(
-      `${process.env.API_BASE_URL}/api/nft/verify/kyc`,
+      `${process.env.API_BASE_URL}/api/nft/verify/worldId`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -20,4 +20,4 @@ const verifyKYC = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default verifyKYC;
+export default verifyWorldId;
