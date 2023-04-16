@@ -8,6 +8,7 @@ const privateKey = process.env.PRIVATE_KEY;
 if (!NftContractAddress || !privateKey)
   throw new Error("Missing env variables");
 console.log("Contract address:", NftContractAddress);
+console.log("working!);
 
 const mintNFT = async (req: Request, res: Response) => {
   try {
