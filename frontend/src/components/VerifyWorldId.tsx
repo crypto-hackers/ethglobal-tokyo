@@ -3,6 +3,7 @@ import { web3Store } from "@/stores/web3Store";
 import { observer } from "mobx-react-lite";
 import { verificationDataStore } from "@/stores/verificationDataStore";
 import { SignInWithWorldID } from "@worldcoin/idkit";
+import cryptoRandomString from 'crypto-random-string';
 
 const VerifyWorldId: React.FC = () => {
   const [message, setMessage] = useState("");
@@ -31,15 +32,17 @@ const VerifyWorldId: React.FC = () => {
     }
   };
 
+  const randomString = cryptoRandomString({ length: 10 });
+
   return (
     <>
       <SignInWithWorldID
-        nonce="z-dkEmoy_ujfk7B8uTiQpp"
+        nonce={randomString}
         onSuccess={(result) => {
           console.log(result);
           handleVerify();
         }}
-        app_id="app_staging_bdde51f6c88010a57aec659b733f18b4"
+        app_id="app_7532c5865327fdc0a4f409574775e380"
       >
         {({ open }) => (
           <button
