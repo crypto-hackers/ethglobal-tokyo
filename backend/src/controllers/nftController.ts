@@ -164,14 +164,15 @@ const updateWorldIdData = async (req: Request, res: Response) => {
 
     const tokenId = await tokenOfOwnerByIndex(to);
 
+
     const gasEstimate = await contract.methods
-      .updateWorldIdData(tokenId, true, "Verified")
+      .updateWorldIdData(tokenId, true, tokenId)
       .estimateGas({ from: account.address });
 
     const updateTx = contract.methods.updateWorldIdData(
       tokenId,
       true,
-      "Verified"
+      tokenId
     );
 
     const signedTx = await web3.eth.accounts.signTransaction(
